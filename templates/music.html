@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Welcome to the Music Player
+{% endblock %}
+
+{% block main %}
+        <div class="container-md">
+            <h1>hello, Enjoy some smooth music</h1>
+                <div class="musicM">
+                    <input type="button" value="PLAY" onclick="play()">
+                    <input type="button" value="NEXT" onclick="next()">
+                    <input type="button" value="PAUSE" onclick="pause()">
+                    <input type="button" value=">> 100%" onclick="volumeM()">
+                    <input type="button" value=">   50% " onclick="volumeL()">
+                    <audio id="play_list"></audio>
+                </div>
+        </div>
+        <script>
+                var mus = [
+                    "static/sound/myS1.mp3",
+                    "static/sound/myS2.mp3",
+                    "static/sound/myS3.mp3"
+                ];
+                var c=0;
+                var play_list = document.querySelector("#play_list");
+                function play() {
+                    play_list.src= mus[c];
+                    play_list.play();
+                }
+                function next(){
+                    if(c==2){
+                        c=0;
+                    }
+                    else{
+                        c++;
+                    }
+                    play_list.src= mus[c];
+                    play_list.play();
+                }
+                function pause() {
+                    play_list.pause();
+                }
+                function volumeM(){
+                    play_list.volume= 1;
+                }
+                function volumeL(){
+                    play_list.volume= 0.5;
+                }
+        </script>
+{% endblock %}
