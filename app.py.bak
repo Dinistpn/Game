@@ -13,8 +13,7 @@ from datetime import datetime
 
 from helpers import apology, login_required
 
-if __name__ == "__main__":
-    app.run()
+
 # Configure application
 app = Flask(__name__)
 
@@ -184,3 +183,6 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+    
+if __name__ == "__main__":
+    app.run()

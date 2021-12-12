@@ -2,7 +2,6 @@ import os
 import secrets
 import requests
 
-from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from flask_login import LoginManager
@@ -10,7 +9,8 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
-
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 from helpers import apology, login_required
 
 
@@ -30,14 +30,21 @@ def after_request(response):
     return response
 
 
-# Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = mkdtemp()
+if not os.getenv('DATABASE_URL', None):
+    raise RuntimeError("DATABASE_URL is not set")
+
+secret_key = secrets.token_hex(16)
+app.config['SECRET_KEY'] = secret_key
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///final.db")
+engine = create_engine(os.getenv("DATABASE_URL"))
+
+db = scoped_session(sessionmaker(bind=engine))
+
+login = LoginManager(app)
+login.init_app(app)
 
 
 @app.route("/", methods=["GET", "POST"])
