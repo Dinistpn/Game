@@ -1,7 +1,6 @@
-import os
 import secrets
 import requests
-import psycopg2
+
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -102,4 +101,4 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
     
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
