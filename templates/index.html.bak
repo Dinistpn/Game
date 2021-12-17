@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+    <H1>Welcome {{username}}</H1>
 	<div class="musicM">
 	    <p>1. To start the Game press the Button with the Level name</p>
 		<p>2. To Pause the Game Press Key "a"</p>
@@ -19,15 +20,6 @@
 	<input type="button" id="res" onclick="reset()" value="Reset"/>
     <canvas id="myCanvas" width="580" height="420" style="border: 10px #dbbd69 solid"></canvas>
     <div id="sub"></div>
-    <form action="/" method="POST">
-        <div class="form-group">
-            <input id="quant" type="number" name="score" readonly="readonly" placeholder="Score">
-        </div>
-        <div class="form-group">
-            <input type="number" id="lev" name="level" readonly="readonly" placeholder="Level">
-        </div>
-        <button class="btn btn-primary" type="submit">Submit Score</button>
-    </form>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script language="javascript" type="text/javascript">
@@ -215,17 +207,17 @@
 					  }
 					  else if(totalS == 12)
 					  {
-					  	totalS = 12 + (lives*3);
-						audioW.play();
-						ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        paused =! paused;
+                        btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
+                        el.appendChild(btn);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
 						level=1;
+                        totalS = 12 + (lives*3);
+						audioW.play();				
 						localStorage.setItem('level', JSON.stringify(level));
 						localStorage.setItem('score', JSON.stringify(totalS));
 						su.setAttribute('value', level);
-						suL.setAttribute('value', totalS);
-						btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
-						el.appendChild(btn);
-						pauseAnimation();
+						suL.setAttribute('value', totalS);                        
 						document.location.reload();
 					  }
 
@@ -258,18 +250,19 @@
 					score = 0;
 				  }
 				  else if(totalS == 30)
-				  {
-				  	totalS = 30 + (lives*3);
-					audioW.play();
+				  { 
+                    paused =! paused;
+                    btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
+				  	el.appendChild(btn);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);                 
 					level=2;
-					localStorage.setItem('level', JSON.stringify(level));
-					localStorage.setItem('score', JSON.stringify(totalS));
-					su.setAttribute('value', level);
-					suL.setAttribute('value', totalS);
-					btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
-					el.appendChild(btn);
-					pauseAnimation();
-					document.location.reload();
+                    totalS = 30 + (lives*3);
+					audioW.play();				
+                    localStorage.setItem('level', JSON.stringify(level));
+                    localStorage.setItem('score', JSON.stringify(totalS));
+                    su.setAttribute('value', level);
+                    suL.setAttribute('value', totalS);                        
+                    document.location.reload();
 				  }
 
 				}
@@ -301,17 +294,18 @@
 				  }
 				  else if(totalS == 96)
 				  {
-				  	totalS = 96 + (lives*3);
-					audioW.play();
+                    paused =! paused;
+                    btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
+				  	el.appendChild(btn);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+				  	totalS = 96 + (lives*3);					
 					level=3;
+                    audioW.play();
 					localStorage.setItem('level', JSON.stringify(level));
-					localStorage.setItem('score', JSON.stringify(totalS));
-					su.setAttribute('value', level);
-					suL.setAttribute('value', totalS);
-					btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
-					el.appendChild(btn);
-					pauseAnimation();
-					document.location.reload();
+                    localStorage.setItem('score', JSON.stringify(totalS));
+                    su.setAttribute('value', level);
+                    suL.setAttribute('value', totalS);                        
+                    document.location.reload();
 				  }
 
 				}
@@ -464,27 +458,27 @@
 		}
 		function win()
 		{
-			lastW();
+            
 			ctx.beginPath();
 			ctx.arc(234, 236, 50, 0, Math.PI*2.5);
 			ctx.arc(424, 236, 10, 0, Math.PI*2.5);
 			ctx.arc(94, 236, 30, 0, Math.PI*2.5);
 			ctx.rect(340, 290, 70, 65);
+            ctx.font = "30px Arial";
+			ctx.fillText("Congratulions you won the level:"+level, 50, 250);
 		    ctx.fillStyle = "#ff3300";
 			ctx.fill();
 			ctx.closePath();
-			requestAnimationFrame(win);
-			su.innerHTML = retriveS;
-			suL.innerHTML = retrive;
-			ctx.font = "30px Arial";
-			ctx.fillText("Congratulions you won the level:"+level, 50, 50);
-			window.location.href=window.location.href
+            draw1totalS();							
+            requestAnimationFrame(win);
+			window.location.reload()
 			if(retrive == 3)
 			{
 				btn.innerHTML = '<input type="button" id="sec" onclick="draw3()" value="Fourth level"/>';
 				el.appendChild(btn);
 				su.setAttribute('value', totalS);
 				suL.setAttribute('value', retrive);
+                requestAnimationFrame(draw3);
 			}
 			else if(retrive == 2)
 			{
@@ -492,6 +486,7 @@
 				el.appendChild(btn);
 				su.setAttribute('value', retriveS);
 				suL.setAttribute('value', retrive);
+                requestAnimationFrame(draw2);
 			}
 			else if(retrive == 1)
 			{
@@ -499,6 +494,7 @@
 				el.appendChild(btn);
 				su.setAttribute('value', retriveS);
 				suL.setAttribute('value', retrive);
+                requestAnimationFrame(draw1);
 			}
 			else
 			{
@@ -506,6 +502,7 @@
 				el.appendChild(btn);
 				su.setAttribute('value', retriveS);
 				suL.setAttribute('value', retrive);
+                requestAnimationFrame(draw1);
 
 			}
 		}

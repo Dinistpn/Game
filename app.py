@@ -32,25 +32,13 @@ Session(app)
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    """Show portfolio of stocks"""
-    if request.method == "POST":
-        quant = int(request.form.get("score"))
-        level = int(request.form.get("level"))
-        if (level == 0) and (quant > 24):
-            return apology("Your score is invalid", 400)
-        if (level == 1) and (quant > 47):
-            return apology("Your score is invalid", 400)
-        if (level == 2) and (quant > 114):
-            return apology("Your score is invalid", 400)
-        if (level == 3) and (quant > 114):
-            return apology("Your score is invalid", 400)
-        user_id = session["user_id"]
-        timeDate = datetime.now()
-        userN = db.execute("select username from users WHERE id=:user_id", user_id=user_id)
-        userC = userN[0]["username"]
-        db.execute("INSERT INTO submissions (username, score, level, time) VALUES (:username, :score, :level, :time)",
-        username = userC, score = quant, level = level, time = timeDate)
-    return render_template("index.html")
+    user_id = session["user_id"]
+ 
+    return render_template("index.html", username= user_id )
+    
+
+        
+    
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -62,11 +50,10 @@ def login():
     if request.method == "POST":
         
         user = request.form.get("username")
-
+    
         # Remember which user has logged in
         session["user_id"] = user
         # Redirect user to home page
-
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -76,10 +63,10 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
+    
     # Forget any user_id
     session.clear()
-    con.close()
+    s = requests.session()
     # Redirect user to login form
     return redirect("/")
 
