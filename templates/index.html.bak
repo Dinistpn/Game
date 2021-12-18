@@ -465,7 +465,7 @@
 			ctx.arc(94, 236, 30, 0, Math.PI*2.5);
 			ctx.rect(340, 290, 70, 65);
             ctx.font = "30px Arial";
-			ctx.fillText("Congratulions you won the level:"+level, 50, 250);
+			ctx.fillText("Congratulions you won the level:"+level, 50, 100);
 		    ctx.fillStyle = "#ff3300";
 			ctx.fill();
 			ctx.closePath();

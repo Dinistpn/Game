@@ -170,6 +170,16 @@
 			leftPressed = false;
 		  }
 		}
+        function screenMoveHandler(e)
+		{
+            if(window.matchMedia("(pointer: coarse)").matches) {
+                var relativeX = e.clientX - canvas.offsetLeft;
+                if(relativeX > 0 && relativeX < canvas.width)
+                {
+                    paddleX = relativeX - paddleWidth/2;
+                }
+            }
+        }
 		function mouseMoveHandler(e)
 		{
 		  var relativeX = e.clientX - canvas.offsetLeft;
