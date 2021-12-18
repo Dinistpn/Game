@@ -55,6 +55,8 @@ main img
 {
     background-color: #ccf2ff;
 }
+#myCanvas
+{
     
 }
 #level1, #level3

@@ -13,6 +13,7 @@
 		<p>4. To Increase the speed press "Space"</p>
 		<p>4. To restore the speed press "a" + "a" + "Space"</p>
 	</div>
+    
     <button>Hide Instructions</button>
 	<button id="se">Instructions</button>
 	<body onload="load()">
@@ -23,6 +24,8 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script language="javascript" type="text/javascript">
+        
+        
 		$(document).ready(function(){
 		  $("button").click(function(){
 		    $("p").hide();
@@ -170,15 +173,16 @@
 			leftPressed = false;
 		  }
 		}
-        function screenMoveHandler(e)
-		{
-            if(window.matchMedia("(pointer: coarse)").matches) {
-                var relativeX = e.clientX - canvas.offsetLeft;
-                if(relativeX > 0 && relativeX < canvas.width)
-                {
-                    paddleX = relativeX - paddleWidth/2;
-                }
-            }
+        document.addEventListener('touchstart', handleTouchEvent, true);
+        document.addEventListener('touchmove', handleTouchEvent, true);
+        document.addEventListener('touchend', handleTouchEvent, true);
+        document.addEventListener('touchcancel', handleTouchEvent, true);
+        function handleTouchEvent(e) {
+            if (e.touches.length === 0 ) return;
+            e.preventDefault();
+            e.stopPropagation();
+            var touch = e.touches[0];
+            paddleX  = (touch.relativeX - paddleWidth / 2) + 'px';
         }
 		function mouseMoveHandler(e)
 		{
@@ -912,6 +916,7 @@
 		  y += dy;
 		  requestAnimationFrame(draw3);
 		}
+        
 		function pause(e){
 			if(e.keyCode == 65) {
 				paused =! paused;
