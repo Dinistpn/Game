@@ -172,10 +172,10 @@
 			leftPressed = false;
 		  }
 		}
-        document.addEventListener('touchstart', handleTouchEvent, false);
-        document.addEventListener('touchmove', handleTouchEvent, false);
-        document.addEventListener('touchend', handleTouchEvent, false);
-        document.addEventListener('touchcancel', handleTouchEvent, false);
+        document.addEventListener('touchstart', handleTouchEvent, true);
+        document.addEventListener('touchmove', handleTouchEvent, true);
+        document.addEventListener('touchend', handleTouchEvent, true);
+        document.addEventListener('touchcancel', handleTouchEvent, true);
         function handleTouchEvent(e) {
             var relativeX = e.clientX - canvas.offsetLeft;
 		    if(relativeX > 0 && relativeX < canvas.width)
