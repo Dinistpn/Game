@@ -13,34 +13,9 @@
 		<p>4. To Increase the speed press "Space"</p>
 		<p>4. To restore the speed press "a" + "a" + "Space"</p>
 	</div>
-    <div id="sample_container"> 
- 
-  <!-- large template -->
-  <script type="text/html" id="lg_xl_template">
-    <div id="lg_xl" 
-         style="background-color:lavenderblush; 
-                padding: 10px; font-size: 22px" >
-     This is the content in the <strong>lg/xl</strong> template.
-    </div> 
-  </script>
- 
-  <!-- small template -->
-  <script type="text/html" id="sm_md_template">
-    <div id="sm_md" 
-         style="background-color:lightcyan; 
-                padding: 10px; font-size: 10px" >
-      This is the content in the <strong>sm/md</strong> template.
-    </div>
-  </script>
- 
- 
-  <!-- display template -->
-  <div data-bind="template: {name: large() ? 'lg_xl_template' : 
-                                             'sm_md_template'}"></div>
-</div>
+    
     <button>Hide Instructions</button>
 	<button id="se">Instructions</button>
-	<body onload="load()">
 	<div id="start"></div>
 	<input type="button" id="res" onclick="reset()" value="Reset"/>
     <canvas id="myCanvas" width="580" height="420" style="border: 10px #dbbd69 solid"></canvas>
@@ -130,7 +105,7 @@
 			bricks2[e][i] = { x: 0, y: 0, status: 1 };
 		  }
 		}
-
+        
 		document.addEventListener("keydown", keyDownHandler, false);
 		document.addEventListener("keydown", pause, false);
 		document.addEventListener("keyup", keyUpHandler, false);
@@ -202,11 +177,12 @@
         document.addEventListener('touchend', handleTouchEvent, true);
         document.addEventListener('touchcancel', handleTouchEvent, true);
         function handleTouchEvent(e) {
+            var relativeX = e.clientX - canvas.offsetLeft;
             if (e.touches.length === 0 ) return;
             e.preventDefault();
             e.stopPropagation();
             var touch = e.touches[0];
-            paddleX  = (touch.relativeX - paddleWidth / 2) + 'px';
+            paddleX = touch.relativeX - paddleWidth/2;
         }
 		function mouseMoveHandler(e)
 		{
@@ -216,11 +192,7 @@
 			paddleX = relativeX - paddleWidth/2;
 		  }
 		}
-		/*function load() {
 
-			document.input.quant.value=totalS;
-			document.input.level.value=level;
-		}*/
 		function collisionDetection0()
 		{
 		    for(var c=0; c<brickColumnCount0; c++)

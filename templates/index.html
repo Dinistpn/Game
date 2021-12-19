@@ -16,7 +16,6 @@
     
     <button>Hide Instructions</button>
 	<button id="se">Instructions</button>
-	<body onload="load()">
 	<div id="start"></div>
 	<input type="button" id="res" onclick="reset()" value="Reset"/>
     <canvas id="myCanvas" width="580" height="420" style="border: 10px #dbbd69 solid"></canvas>
@@ -106,7 +105,7 @@
 			bricks2[e][i] = { x: 0, y: 0, status: 1 };
 		  }
 		}
-
+        
 		document.addEventListener("keydown", keyDownHandler, false);
 		document.addEventListener("keydown", pause, false);
 		document.addEventListener("keyup", keyUpHandler, false);
@@ -173,16 +172,16 @@
 			leftPressed = false;
 		  }
 		}
-        document.addEventListener('touchstart', handleTouchEvent, true);
-        document.addEventListener('touchmove', handleTouchEvent, true);
-        document.addEventListener('touchend', handleTouchEvent, true);
-        document.addEventListener('touchcancel', handleTouchEvent, true);
+        document.addEventListener('touchstart', handleTouchEvent, false);
+        document.addEventListener('touchmove', handleTouchEvent, false);
+        document.addEventListener('touchend', handleTouchEvent, false);
+        document.addEventListener('touchcancel', handleTouchEvent, false);
         function handleTouchEvent(e) {
-            if (e.touches.length === 0 ) return;
-            e.preventDefault();
-            e.stopPropagation();
-            var touch = e.touches[0];
-            paddleX  = (touch.relativeX - paddleWidth / 2) + 'px';
+            var relativeX = e.clientX - canvas.offsetLeft;
+		    if(relativeX > 0 && relativeX < canvas.width)
+		    {
+                paddleX = relativeX - paddleWidth/2;
+		    }
         }
 		function mouseMoveHandler(e)
 		{
@@ -192,11 +191,7 @@
 			paddleX = relativeX - paddleWidth/2;
 		  }
 		}
-		/*function load() {
 
-			document.input.quant.value=totalS;
-			document.input.level.value=level;
-		}*/
 		function collisionDetection0()
 		{
 		    for(var c=0; c<brickColumnCount0; c++)
