@@ -16,14 +16,33 @@
     
     <button>Hide Instructions</button>
 	<button id="se">Instructions</button>
-	<div id="start"></div>
-	<input type="button" id="res" onclick="reset()" value="Reset"/>
-    <canvas id="myCanvas" width="580" height="420" style="border: 10px #dbbd69 solid"></canvas>
-    <div id="sub"></div>
+    </br>
+    </br>
+    <div id="cont" style="background: #FFFFFF;">
+		<div id="start"></div>
+		<input type="button" id="res" onclick="reset()" style="z-index:20; position:absolute; y:top;" value="Reset"/>
+        <canvas id="myCanvas" style="z-index:1; border: 10px #dbbd69 solid; position: relative; left: 0px; top: 0px; opacity: 1;"  
+		width="615" height="340" ></canvas>           
+    </div>
+        
 
+    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script language="javascript" type="text/javascript">
-        
+        var canvasA = document.getElementById("myCanvas");
+        const FullScreen = () => {
+          if (document.fullscreenElement)
+            document.exitFullscreen()
+          else
+            canvasA.requestFullscreen()
+        }
+        var but = document.getElementById("start");
+        but.addEventListener('click', FullScreen)
+        var onChange = () => {
+          canvasA.getElementsByClassName = document.fullscreenElement ? 'Fullscreen' : ''
+        }
+
+        document.addEventListener('fullscreenchange', onChange)
         
 		$(document).ready(function(){
 		  $("button").click(function(){
@@ -40,8 +59,8 @@
 		var canvas = document.getElementById("myCanvas");
 		var ctx = canvas.getContext("2d");
 		var ballRadius = 8;
-		var x = canvas.width-30;
-		var y = canvas.height-30;
+		var x = canvas.width-45;
+		var y = canvas.height-45;
 		var dx = 3;
 		var dy = -3;
 		var paddleHeight = 10;
@@ -73,6 +92,8 @@
 		var audioL = new Audio('static/sound/loading.wav');
 		var audioW = new Audio('static/sound/win.wav');
 		var audioF = new Audio('static/sound/final.wav');
+		/*https://www.chosic.com/download-audio/25480/*/
+		var music = new Audio('static/sound/Komiku_-_35_-_The_True_Last_Boss.mp3');
 		var bricks0 = [];
 		var bricks = [];
 		var bricks2 = [];
@@ -80,10 +101,10 @@
 		var retriveS = JSON.parse(localStorage.getItem('score'));
 		var el = document.getElementById("start");
 		var btn = document.createElement("BUTTON");
-		var su = document.getElementById("quant");
 		var suL = document.getElementById("lev");
 		var paused = false;
 
+		
 		for(var c=0; c<brickColumnCount0; c++)
 		{
 			bricks0[c] = [];
@@ -109,40 +130,44 @@
 		document.addEventListener("keydown", keyDownHandler, false);
 		document.addEventListener("keydown", pause, false);
 		document.addEventListener("keyup", keyUpHandler, false);
-		document.addEventListener("mousemove", mouseMoveHandler, false);
+		document.addEventListener("mousemove", displayPosition, false);
 		if(retrive == 3)
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw3()" value="Fourth level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; position:absolute; y:top;" id="sec" onclick="draw3()" value="Fourth level"/>';
 			el.appendChild(btn);
-			su.setAttribute('value', totalS);
-			suL.setAttribute('value', retrive);
 			totalS = 0;
 		}
 		else if(retrive == 2)
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw2()" value="Third level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; position:absolute; y:top;" id="sec" onclick="draw2()" value="Third level"/>';
 			el.appendChild(btn);
-			su.setAttribute('value', retriveS);
-			suL.setAttribute('value', retrive);
 			totalS = 0;
 		}
 		else if(retrive == 1)
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw1()" value="Second level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; position:absolute; y:top;" id="sec" onclick="draw1()" value="Second level"/>';
 			el.appendChild(btn);
-			su.setAttribute('value', retriveS);
-			suL.setAttribute('value', retrive);
 			totalS = 0;
 		}
 		else
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw0()" value="First level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; position:absolute; y:top;" id="sec" onclick="draw0()" value="First level"/>';
 			el.appendChild(btn);
-			su.setAttribute('value', retriveS);
-			suL.setAttribute('value', retrive);
 			totalS = 0;
 
 		}
+
+        
+        $("#el").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $("#myButton").click();
+            }
+        });
+
+        $("#myButton").click(function() {
+          alert("Button code executed.");
+        });
+
 		function reset()
 		{
 			level = 0;
@@ -172,24 +197,44 @@
 			leftPressed = false;
 		  }
 		}
-        document.addEventListener('touchstart', handleTouchEvent, true);
-        document.addEventListener('touchmove', handleTouchEvent, true);
-        document.addEventListener('touchend', handleTouchEvent, true);
-        document.addEventListener('touchcancel', handleTouchEvent, true);
-        function handleTouchEvent(e) {
-            var relativeX = e.clientX - canvas.offsetLeft;
-		    if(relativeX > 0 && relativeX < canvas.width)
-		    {
-                paddleX = relativeX - paddleWidth/2;
-		    }
-        }
-		function mouseMoveHandler(e)
-		{
-		  var relativeX = e.clientX - canvas.offsetLeft;
-		  if(relativeX > 0 && relativeX < canvas.width)
-		  {
-			paddleX = relativeX - paddleWidth/2;
-		  }
+        document.addEventListener('touchstart', handleTouchEvent, false);
+        document.addEventListener('touchmove', handleTouchEvent, false);
+        document.addEventListener('touchend', handleTouchEvent, false);
+    
+		document.body.addEventListener("touchstart", function (e) {
+			if (e.target == canvas) {
+				e.preventDefault();
+			}
+		}, false);
+		document.body.addEventListener("touchend", function (e) {
+			if (e.target == canvas) {
+				e.preventDefault();
+			}
+		}, false);
+		document.body.addEventListener("touchmove", function (e) {
+			if(event.type === "touchend") {
+					paddleX = e.changedTouches[0].pageX;
+					e.preventDefault();
+			}
+			else{
+				paddleX = e.touches[0].pageX     
+        	}
+		})
+		
+		function displayPosition(evt) {
+			var z = canvas.getBoundingClientRect();			
+			if(document.fullscreenElement){
+				posF = evt.clientX/2 - z.left*2 - 31;
+				if(posF > 0 && posF < canvas.width){
+					paddleX = posF - 28;
+				}
+			}	
+			else{
+				pos = evt.clientX - z.left;
+				if(pos > 0 && pos < canvas.width){
+					paddleX = pos - 28;
+				}	
+			}
 		}
 
 		function collisionDetection0()
@@ -201,7 +246,7 @@
 				  var b = bricks0[c][r];
 				  if(b.status == 1)
 				  {
-					if(x > b.x && x < b.x+brickWidth0 && y > b.y && y < b.y+brickHeight0)
+					if(x > b.x && x < b.x+brickWidth0-1 && y > b.y && y < b.y+brickHeight0-1)
 					{
 					  dy = -dy;
 					  b.status = 0;
@@ -217,17 +262,13 @@
 					  else if(totalS == 12)
 					  {
                         paused =! paused;
-                        btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
-                        el.appendChild(btn);
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);			
 						level=1;
                         totalS = 12 + (lives*3);
 						audioW.play();				
 						localStorage.setItem('level', JSON.stringify(level));
 						localStorage.setItem('score', JSON.stringify(totalS));
-						su.setAttribute('value', level);
-						suL.setAttribute('value', totalS);                        
-						document.location.reload();
+						return win();  					                     
 					  }
 
 					}
@@ -245,7 +286,7 @@
 			  var b = bricks[c][r];
 			  if(b.status == 1)
 			  {
-				if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight)
+				if(x > b.x && x < b.x+brickWidth-1 && y > b.y && y < b.y+brickHeight-1)
 				{
 				  dy = -dy;
 				  b.status = 0;
@@ -261,17 +302,13 @@
 				  else if(totalS == 30)
 				  { 
                     paused =! paused;
-                    btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
-				  	el.appendChild(btn);
                     ctx.clearRect(0, 0, canvas.width, canvas.height);                 
 					level=2;
                     totalS = 30 + (lives*3);
 					audioW.play();				
                     localStorage.setItem('level', JSON.stringify(level));
                     localStorage.setItem('score', JSON.stringify(totalS));
-                    su.setAttribute('value', level);
-                    suL.setAttribute('value', totalS);                        
-                    document.location.reload();
+					return win(); 
 				  }
 
 				}
@@ -288,7 +325,7 @@
 			{
 			  var b = bricks2[c][r];
 			  if(b.status == 1) {
-				if(x > b.x && x < b.x+brickWidth2 && y > b.y && y < b.y+brickHeight2)
+				if(x > b.x && x < b.x+brickWidth2-1 && y > b.y && y < b.y+brickHeight2-1)
 				{
 				  dy = -dy;
 				  b.status = 0;
@@ -304,17 +341,14 @@
 				  else if(totalS == 96)
 				  {
                     paused =! paused;
-                    btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
-				  	el.appendChild(btn);
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 				  	totalS = 96 + (lives*3);					
 					level=3;
                     audioW.play();
 					localStorage.setItem('level', JSON.stringify(level));
                     localStorage.setItem('score', JSON.stringify(totalS));
-                    su.setAttribute('value', level);
-                    suL.setAttribute('value', totalS);                        
-                    document.location.reload();
+					return win();
+						  
 				  }
 
 				}
@@ -331,7 +365,7 @@
 			{
 			  var b = bricks2[c][r];
 			  if(b.status == 1) {
-				if(x > b.x && x < b.x+brickWidth2 && y > b.y && y < b.y+brickHeight2)
+				if(x > b.x && x < b.x+brickWidth2-1 && y > b.y && y < b.y+brickHeight2-1)
 				{
 				  dy = -dy;
 				  b.status = 0;
@@ -345,18 +379,15 @@
 					score = 0;
 				  }
 				  else if(totalS == 96)
-				  {
+				  {	
+					paused =! paused;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
 				  	totalS = 96 + (lives*3);
 					audioF.play();
 					level = 4;
 					localStorage.setItem('level', JSON.stringify(level));
 					localStorage.setItem('score', JSON.stringify(totalS));
-					su.setAttribute('value', level);
-					suL.setAttribute('value', totalS);
-					btn.innerHTML = '<input type="button" id="sec" onclick="win()" value="win"/>';
-					el.appendChild(btn);
-					pauseAnimation();
-					document.location.reload();
+					return win();
 				  }
 
 				}
@@ -506,7 +537,8 @@
                 requestAnimationFrame(draw1);
 			}
 			else
-			{
+			{	
+				
 				btn.innerHTML = '<input type="button" id="sec" onclick="draw0()" value="First level"/>';
 				el.appendChild(btn);
 				su.setAttribute('value', retriveS);
@@ -622,12 +654,7 @@
   			}
 		  }
 		}
-		function draw1Score()
-		{
-		  ctx.font = "16px Arial";
-		  ctx.fillStyle = "#0095DD";
-		  ctx.fillText("Score: "+score, 8, 20);
-		}
+
 		function draw1totalS()
 		{
 		  ctx.font = "16px Arial";
@@ -644,18 +671,19 @@
 		{
 			if(paused)
 			{
+				music.pause();
 				return;
 			}
+			music.play();
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			spaceship();
 			  draw1Bricks0();
 			  draw1Ball();
 			  draw1Paddle();
-			  draw1Score();
 			  draw1totalS();
 			  draw1Lives();
 			  collisionDetection0();
-
+			  
 			  if(x + dx > canvas.width-ballRadius || x + dx < ballRadius)
 			  {
 				dx = -dx;
@@ -712,14 +740,15 @@
 		{
 			if(paused)
 			{
+				music.pause();
 				return;
 			}
+			music.play();
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			trees();
 		    draw1Bricks();
 		    draw1Ball();
 		    draw1Paddle();
-		    draw1Score();
 		    draw1totalS();
 		    draw1Lives();
 		    collisionDetection1();
@@ -778,15 +807,16 @@
 		function draw2()
 		{
 			if(paused)
-			{
+			{	
+				music.pause();
 				return;
 			}
+			music.play();
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			skyline()
 		    draw1Bricks2();
 		    draw1Ball();
 		    draw1Paddle();
-		    draw1Score();
 		    draw1totalS();
             draw1Lives();
 		    collisionDetection2();
@@ -847,14 +877,15 @@
 		{
 			if(paused)
 			{
-				return;
+				music.pause();
+				return;				
 			}
+			music.play();
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			stars();
 		    draw1Bricks2();
 		    draw1Ball();
 		    draw1Paddle3();
-		    draw1Score();
 		    draw1totalS();
 		    draw1Lives();
 		    collisionDetection3();
@@ -862,17 +893,17 @@
 
 		    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius)
 	  	    {
-			    dx = -dx;
+			    dx = -dx-0.000001;
 		    }
 		    if(y + dy < ballRadius)
 		    {
-			    dy = -dy;
+			    dy = -dy-0.000001;
 		    }
 		    else if(y + dy > canvas.height-ballRadius)
 		    {
 		    	if(x > paddleX && x < paddleX + paddleWidth)
 				{
-					dy = -dy;
+					dy = -dy-0.000001;
 				}
 				else
 				{

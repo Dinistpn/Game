@@ -16,14 +16,34 @@
     
     <button>Hide Instructions</button>
 	<button id="se">Instructions</button>
-	<div id="start"></div>
-	<input type="button" id="res" onclick="reset()" value="Reset"/>
-    <canvas id="myCanvas" width="580" height="420" style="border: 10px #dbbd69 solid"></canvas>
-    <div id="sub"></div>
+    </br>
+    </br>
+    <div id="cont" style="padding:0px; margin:0px;">
+        <menu id="controls"> 
+            <div id="start"></div>
+            <input type="button" id="res" onclick="reset()" style="z-index:2; " value="Reset"/>
+        </menu>   
+        <canvas id="myCanvas" style="z-index:1; border: 10px #dbbd69 solid; background: #FFFFFF" width="590" height="430"></canvas>           
+    </div>
+        
 
+    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script language="javascript" type="text/javascript">
-        
+        var canvas = document.getElementById("cont");
+        const FullScreen = () => {
+          if (document.fullscreenElement)
+            document.exitFullscreen()
+          else
+            canvas.requestFullscreen()
+        }
+        var but = document.getElementById("start");
+        but.addEventListener('click', FullScreen)
+        var onChange = () => {
+          canvas.className = document.fullscreenElement ? 'fullscreen' : ''
+        }
+
+        document.addEventListener('fullscreenchange', onChange)
         
 		$(document).ready(function(){
 		  $("button").click(function(){
@@ -112,7 +132,7 @@
 		document.addEventListener("mousemove", mouseMoveHandler, false);
 		if(retrive == 3)
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw3()" value="Fourth level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; " id="sec" onclick="draw3()" value="Fourth level"/>';
 			el.appendChild(btn);
 			su.setAttribute('value', totalS);
 			suL.setAttribute('value', retrive);
@@ -120,7 +140,7 @@
 		}
 		else if(retrive == 2)
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw2()" value="Third level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; " id="sec" onclick="draw2()" value="Third level"/>';
 			el.appendChild(btn);
 			su.setAttribute('value', retriveS);
 			suL.setAttribute('value', retrive);
@@ -128,7 +148,7 @@
 		}
 		else if(retrive == 1)
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw1()" value="Second level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; " id="sec" onclick="draw1()" value="Second level"/>';
 			el.appendChild(btn);
 			su.setAttribute('value', retriveS);
 			suL.setAttribute('value', retrive);
@@ -136,13 +156,25 @@
 		}
 		else
 		{
-			btn.innerHTML = '<input type="button" id="sec" onclick="draw0()" value="First level"/>';
+			btn.innerHTML = '<input type="button" style="z-index:2; " id="sec" onclick="draw0()" value="First level"/>';
 			el.appendChild(btn);
 			su.setAttribute('value', retriveS);
 			suL.setAttribute('value', retrive);
 			totalS = 0;
 
 		}
+
+        
+        $("#el").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $("#myButton").click();
+            }
+        });
+
+        $("#myButton").click(function() {
+          alert("Button code executed.");
+        });
+
 		function reset()
 		{
 			level = 0;
@@ -172,10 +204,10 @@
 			leftPressed = false;
 		  }
 		}
-        document.addEventListener('touchstart', handleTouchEvent, false);
-        document.addEventListener('touchmove', handleTouchEvent, false);
-        document.addEventListener('touchend', handleTouchEvent, false);
-        document.addEventListener('touchcancel', handleTouchEvent, false);
+        document.addEventListener('touchstart', handleTouchEvent, true);
+        document.addEventListener('touchmove', handleTouchEvent, true);
+        document.addEventListener('touchend', handleTouchEvent, true);
+        document.addEventListener('touchcancel', handleTouchEvent, true);
         function handleTouchEvent(e) {
             var relativeX = e.clientX - canvas.offsetLeft;
 		    if(relativeX > 0 && relativeX < canvas.width)
@@ -622,12 +654,7 @@
   			}
 		  }
 		}
-		function draw1Score()
-		{
-		  ctx.font = "16px Arial";
-		  ctx.fillStyle = "#0095DD";
-		  ctx.fillText("Score: "+score, 8, 20);
-		}
+
 		function draw1totalS()
 		{
 		  ctx.font = "16px Arial";
@@ -651,7 +678,6 @@
 			  draw1Bricks0();
 			  draw1Ball();
 			  draw1Paddle();
-			  draw1Score();
 			  draw1totalS();
 			  draw1Lives();
 			  collisionDetection0();
@@ -719,7 +745,6 @@
 		    draw1Bricks();
 		    draw1Ball();
 		    draw1Paddle();
-		    draw1Score();
 		    draw1totalS();
 		    draw1Lives();
 		    collisionDetection1();
@@ -786,7 +811,6 @@
 		    draw1Bricks2();
 		    draw1Ball();
 		    draw1Paddle();
-		    draw1Score();
 		    draw1totalS();
             draw1Lives();
 		    collisionDetection2();

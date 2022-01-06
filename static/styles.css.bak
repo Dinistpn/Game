@@ -1,6 +1,8 @@
 body {
     width:100%;
     height:100%;
+    margin: 0;
+
 }
 
 nav .navbar-brand
@@ -55,8 +57,6 @@ main img
 {
     background-color: #ccf2ff;
 }
-#myCanvas
-{
     
 }
 #level1, #level3
@@ -81,4 +81,36 @@ main img
 
 .musicM{
     border: 4px solid;
+}
+
+#myCanvas:fullscreen {
+    background-color: white;
+    border: 10px #dbbd69 solid; 
+    width: 95%;
+    height: 95%;
+    top: 0;
+}
+#myCanvas:-webkit-full-screen {
+    background-color: white;
+    border: 10px #dbbd69 solid;
+    width: 95%;
+    height: 95%;  
+    top: 0;    
+}
+#myCanvas:-moz-full-screen {
+    background-color: white;
+    border: 10px #dbbd69 solid; 
+    width: 95%;
+    height: 95%;
+    top: 0;
+}
+
+#viewport 
+{ 
+  height: 100%; 
+  width: 100%; 
+} 
+align-content: flex-start | flex-end | center | space-between | space-around | stretch
+#controls {
+  align-content: space-around;
 }
