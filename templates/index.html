@@ -279,6 +279,7 @@
 		}
 		function collisionDetection1()
 		{
+			
 		  for(var c=0; c<brickColumnCount; c++)
 		  {
 			for(var r=0; r<brickRowCount; r++)
@@ -408,55 +409,217 @@
 		function spaceship()
 		{
 			ctx.restore();
+			ctx.fillStyle = "#ffe6e6";
 			ctx.beginPath();
 			var x = 325;
 			var y = 356;
 			ctx.arc(x, y, 90, 0, Math.PI*2.5);
 			x = 424;
 			y = 332;
+			ctx.fill();
+			ctx.fillStyle = "#ccd9ff";
+			ctx.beginPath();
 			ctx.arc(x, y, 50, 0, Math.PI*2.5);
+			ctx.fill();	 
 			x = 94;
 			y = 236;
+			ctx.fillStyle = "#80aaff";
+			ctx.beginPath();
 			ctx.arc(x, y, 30, 0, Math.PI*2.5);
-		    ctx.fillStyle = "red";
-			ctx.fill();
+			ctx.arc(x-60, y+50, 30, 0, Math.PI*2.5);
+			ctx.fill();	    	
 			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(x, y, 30, 0, Math.PI*2.5);
+			ctx.arc(x-60, y-150, 30, 0, Math.PI*2.5);
+			ctx.fill();	    	
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(x, y, 30, 0, Math.PI*2.5);
+			ctx.arc(x+160, y-150, 20, 0, Math.PI*2.5);
+			ctx.fill();	    	
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(x, y, 30, 0, Math.PI*2.5);
+			ctx.fill();	    	
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.rect(x+300, y, 30, 50);
+			ctx.rect(x+370, y, 30, 50);
+			ctx.arc(x+360, y+50, 30, 0, Math.PI*2.5);
+			ctx.arc(x+400, y+50, 30, 0, Math.PI*2.5);	
+			ctx.closePath();
+			ctx.fill();	 
 		}
 		function trees()
 		{
+			var tree = {
+				x: 234,
+				x1: 241,
+				x2: 227,
+				x3: 224,
+				x4: 244,
+				y: 250,
+				y1: 254,
+				y2: 268,
+				y3: 260,
+				y4: 270,
+				width: 15,
+				height: 0,
+				pI: Math.PI*2.5,
+				baseX: 230,
+				baseY: 280,
+				baseWidth: 10,
+				baseHeight: 24
+			};
+
 			ctx.restore();
 			ctx.beginPath();
-			ctx.arc(234, 300, 60, 0, Math.PI*2.5);
-			ctx.rect(290, 290, 50, 23);
-			ctx.arc(400, 236, 30, 0, Math.PI*2.5);
-			ctx.rect(340, 290, 50, 65);
-			ctx.arc(80, 420, 80, 0, Math.PI*2.5);
-			ctx.arc(80, 520, 140, 0, Math.PI*3.5);
-		    ctx.fillStyle = "#ffb366";
+			ctx.fillStyle = "#e6f5ff";
+			ctx.rect(0, 310, 615, 44);
 			ctx.fill();
 			ctx.closePath();
+			ctx.beginPath();
+			ctx.fillStyle = "#b3ff66";
+			ctx.rect(0, 250, 615, 64);
+			ctx.fill();
+			ctx.closePath();
+			ctx.fillStyle = "#cc6600";
+			ctx.beginPath();
+			ctx.rect(tree.baseX-50, tree.baseY-43, tree.baseWidth*0.6, tree.baseHeight*0.6);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.rect(tree.baseX+50, tree.baseY-20, tree.baseWidth-2, tree.baseHeight-2);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();			
+			ctx.rect(tree.baseX, tree.baseY, tree.baseWidth, tree.baseHeight);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.rect(tree.baseX+100, tree.baseY, tree.baseWidth, tree.baseHeight);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.rect(tree.baseX-90, tree.baseY, tree.baseWidth, tree.baseHeight);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.rect(tree.baseX-190, tree.baseY-20, tree.baseWidth-2, tree.baseHeight-2);
+			ctx.fill();
+			ctx.closePath();
+			ctx.fillStyle = "#99ff99";
+			ctx.beginPath();
+			ctx.arc(tree.x-50, tree.y-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.arc(tree.x1-50, tree.y1-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.arc(tree.x1-50, tree.y2-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.arc(tree.x2-50, tree.y1-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.arc(tree.x2-50, tree.y2-1-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.arc(tree.x3-50, tree.y3-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.arc(tree.x4-50, tree.y3-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.arc(tree.x-50, tree.y4-40, tree.width*0.6, tree.height, tree.pI);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(tree.x+50, tree.y-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x1+50, tree.y1-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x1+50, tree.y2-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x2+50, tree.y1-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x2+50, tree.y2-1-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x3+50, tree.y3-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x4+50, tree.y3-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x+50, tree.y4-20, tree.width -2, tree.height, tree.pI);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(tree.x, tree.y, tree.width-2, tree.height, tree.pI);
+			ctx.arc(tree.x1, tree.y1, tree.width-2, tree.height, tree.pI);
+			ctx.arc(tree.x1, tree.y2, tree.width-2, tree.height, tree.pI);
+			ctx.arc(tree.x2, tree.y1, tree.width-2, tree.height, tree.pI);
+			ctx.arc(tree.x2, tree.y2-1, tree.width-2, tree.height, tree.pI);
+			ctx.arc(tree.x3, tree.y3, tree.width-2, tree.height, tree.pI);
+			ctx.arc(tree.x4, tree.y3, tree.width-2, tree.height, tree.pI);
+			ctx.arc(tree.x, tree.y4, tree.width-2, tree.height, tree.pI);
+			ctx.fill();
+			ctx.closePath();
+			//1º
+			ctx.beginPath();
+		    ctx.arc(tree.x+100, tree.y, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x1+100, tree.y1, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x1+100, tree.y2, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x2+100, tree.y1, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x2+100, tree.y2-1, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x3+100, tree.y3, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x4+100, tree.y3, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x+100, tree.y4, tree.width, tree.height, tree.pI);
+			//2º
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(tree.x-90, tree.y, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x1-90, tree.y1, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x1-90, tree.y2, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x2-90, tree.y1, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x2-90, tree.y2-1, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x3-90, tree.y3, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x4-90, tree.y3, tree.width, tree.height, tree.pI);
+			ctx.arc(tree.x-90, tree.y4, tree.width, tree.height, tree.pI);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(tree.x-190, tree.y-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x1-190, tree.y1-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x1-190, tree.y2-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x2-190, tree.y1-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x2-190, tree.y2-1-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x3-190, tree.y3-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x4-190, tree.y3-20, tree.width -2, tree.height, tree.pI);
+			ctx.arc(tree.x-190, tree.y4-20, tree.width -2, tree.height, tree.pI);
+			ctx.fill();
+			ctx.closePath();		
 		}
 		function skyline()
 		{
 			ctx.restore();
+			ctx.fillStyle = "#ede187";
 			ctx.beginPath();
-			ctx.arc(534, 200, 40, 0, Math.PI*2.5);
-			ctx.rect(0, 290, 50, 200);
-			ctx.rect(10, 290, 50, 74);
-			ctx.rect(50, 290, 50, 89);
+			ctx.arc(534, 100, 40, 0, Math.PI*2.5);
+			ctx.fill();
+			ctx.closePath();
+			ctx.fillStyle = "#8a8a5c";
+			ctx.beginPath();			
+			ctx.rect(0, 190, 50, 200);
+			ctx.rect(10, 316, 50, 74);
+			ctx.rect(50, 301, 50, 89);
 			ctx.rect(90, 290, 50, 110);
-			ctx.rect(140, 290, 50, 23);
-			ctx.rect(180, 290, 50, 67);
-			ctx.rect(220, 290, 50, 23);
-			ctx.rect(260, 290, 50, 84);
-			ctx.rect(300, 290, 50, 45);
-			ctx.rect(340, 290, 50, 100);
-			ctx.rect(380, 290, 50, 87);
-			ctx.rect(420, 290, 50, 35);
-			ctx.rect(470, 290, 50, 87);
-			ctx.rect(520, 290, 50, 90);
-			ctx.rect(570, 290, 50, 200);
-		    ctx.fillStyle = "#8a8a5c";
+			ctx.rect(140, 320, 50, 23);
+			ctx.rect(180, 280, 50, 67);
+			ctx.rect(220, 320, 50, 23);
+			ctx.rect(260, 280, 50, 84);
+			ctx.rect(300, 340, 50, 45);
+			ctx.rect(340, 280, 50, 100);
+			ctx.rect(380, 280, 50, 87);
+			ctx.rect(420, 30, 50, 35);
+			ctx.rect(470, 270, 50, 87);
+			ctx.rect(520, 280, 50, 90);
+			ctx.rect(570, 280, 50, 200);  
+			ctx.fill();
+			ctx.closePath();
+			ctx.fillStyle = "black";
+			ctx.beginPath();			
+			ctx.strokeRect(0, 190, 2, 200);
+		
+			ctx.strokeRect(50, 301, 2, 70);
+			ctx.strokeRect(90, 290, 2, 90);
+			ctx.strokeRect(140, 320, 2, 23);
+			ctx.strokeRect(180, 280, 2, 67);		
+			ctx.strokeRect(260, 280, 2, 84);	
+			ctx.strokeRect(340, 280, 2, 100);
+			ctx.strokeRect(380, 280, 2, 87);	
+			ctx.strokeRect(470, 280, 2, 87);
+			ctx.strokeRect(520, 280, 2, 90);
+			ctx.strokeRect(570, 280, 2, 200);
 			ctx.fill();
 			ctx.closePath();
 		}
@@ -498,16 +661,32 @@
 		}
 		function win()
 		{
-            
+            ctx.fillStyle = "#ff3300";
 			ctx.beginPath();
 			ctx.arc(234, 236, 50, 0, Math.PI*2.5);
 			ctx.arc(424, 236, 10, 0, Math.PI*2.5);
+			ctx.fill();
+			ctx.closePath();
+			ctx.fillStyle = "#cc6600";
+			ctx.beginPath();
 			ctx.arc(94, 236, 30, 0, Math.PI*2.5);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(194, 136, 20, 0, Math.PI*2.5);
+			ctx.fill();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(294, 336, 25, 0, Math.PI*2.5);
+			ctx.arc(394, 36, 40, 0, Math.PI*2.5);
+			ctx.fill();
+			ctx.closePath();
+			ctx.fillStyle = "#4d0000";
+			ctx.beginPath();
 			ctx.rect(340, 290, 70, 65);
             ctx.font = "30px Arial";
-			ctx.fillText("Congratulions you won the level:"+level, 50, 100);
-		    ctx.fillStyle = "#ff3300";
-			ctx.fill();
+			ctx.fillText("Congratulions you won the level:"+level, 50, 100);		    
+			ctx.stroke();
 			ctx.closePath();
             draw1totalS();							
             requestAnimationFrame(win);
@@ -751,8 +930,7 @@
 		    draw1Paddle();
 		    draw1totalS();
 		    draw1Lives();
-		    collisionDetection1();
-
+		    collisionDetection1();		
 		  if(x + dx > canvas.width-ballRadius || x + dx < ballRadius)
 		  {
 			dx = -dx;
@@ -783,8 +961,8 @@
 
 				x = canvas.width/2;
 				y = canvas.height-30;
-				dx = 3;
-				dy = -3;
+				dx = 4;
+				dy = -4;
 				paddleX = (canvas.width-paddleWidth)/2;
 
 			  }
@@ -800,8 +978,8 @@
 			paddleX -= 7;
 		  }
 
-		  x += dx;
-		  y += dy;
+		  x += dx+1;
+		  y += dy+1;
 		  requestAnimationFrame(draw1);
 		}
 		function draw2()
@@ -820,7 +998,6 @@
 		    draw1totalS();
             draw1Lives();
 		    collisionDetection2();
-
 
 		  if(x + dx > canvas.width-ballRadius || x + dx < ballRadius)
 		  {
@@ -852,8 +1029,8 @@
 			  {
 				x = canvas.width/2;
 				y = canvas.height-30;
-				dx = 3;
-				dy = -3;
+				dx = 4.5;
+				dy = -4.5;
 				paddleX = (canvas.width-paddleWidth)/2;
 
 			  }
@@ -869,8 +1046,8 @@
   			paddleX -= 7;
 		  }
 
-		  x += dx;
-		  y += dy;
+		  x += dx+1.5;
+		  y += dy+1.5;
 		  requestAnimationFrame(draw2);
 		}
 		function draw3()
@@ -921,8 +1098,8 @@
 			  {
 				x = canvas.width/2;
 				y = canvas.height-30;
-				dx = 3;
-				dy = -3;
+				dx = 4.5;
+				dy = -4.5;
 				paddleX = (canvas.width-paddleWidth)/2;
 
 			  }
@@ -938,8 +1115,8 @@
   			paddleX -= 7;
 		  }
 
-		  x += dx;
-		  y += dy;
+		  x += dx+1.5;
+		  y += dy+1.5;
 		  requestAnimationFrame(draw3);
 		}
         
