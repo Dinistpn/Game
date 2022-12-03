@@ -6,9 +6,6 @@
 
 {% block main %}
     <H1>Welcome {{username}}</H1>
-	<button>Hide Instructions</button>
-	<button id="se">Instructions</button>
-    </br>
 	<div class="musicM">
 	    <p>1. To start the Game press the Button with the Level name</p>
 		<p>2. To Pause the Game Press Key "a"</p>
@@ -16,13 +13,14 @@
 		<p>4. To Increase the speed press "Space"</p>
 		<p>4. To restore the speed press "a" + "a" + "Space"</p>
 	</div>
-    <input type="button" value="Play Music" onclick="play()">
-	<input type="button" value="Mute Music" onclick="pauseM()">
-	</br>	
+    
+    <button>Hide Instructions</button>
+	<button id="se">Instructions</button>
+    </br>
     </br>
     <div id="cont" style="background: #FFFFFF;">
 		<div id="start"></div>
-		<input type="button" id="res" onclick="reset()" style="z-index:20; position:absolute; " value="Reset"/>
+		<input type="button" id="res" onclick="reset()" style="z-index:20; position:absolute; y:top;" value="Reset"/>
         <canvas id="myCanvas" style="z-index:1; border: 10px #dbbd69 solid; position: relative; left: 0px; top: 0px; opacity: 1;"  
 		width="615" height="340" ></canvas>           
     </div>
@@ -31,12 +29,6 @@
     
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script language="javascript" type="text/javascript">
-		function play() {
-			music.play();
-		}
-		function pauseM() {
-			music.pause();
-		}
         var canvasA = document.getElementById("myCanvas");
         const FullScreen = () => {
           if (document.fullscreenElement)
@@ -51,7 +43,7 @@
         }
 
         document.addEventListener('fullscreenchange', onChange)
-		    
+        
 		$(document).ready(function(){
 		  $("button").click(function(){
 		    $("p").hide();
@@ -62,7 +54,7 @@
 		  	$("p").show();
 		  });
 		});
-		
+
     	/*https://mixkit.co/free-sound-effects/game/ - sounds*/
 		var canvas = document.getElementById("myCanvas");
 		var ctx = canvas.getContext("2d");
@@ -105,7 +97,6 @@
 		var bricks0 = [];
 		var bricks = [];
 		var bricks2 = [];
-		var lastA = {speed: 1, arr: []  , total: 30};
 		var retrive = JSON.parse(localStorage.getItem('level'));
 		var retriveS = JSON.parse(localStorage.getItem('score'));
 		var el = document.getElementById("start");
@@ -113,22 +104,7 @@
 		var suL = document.getElementById("lev");
 		var paused = false;
 
-		function fillRange() {
-		let xPos = Math.random() * (x);
-		let colorBack = '#' + Math.random().toString(16).substr(-6);
-		let wid = Math.random() * 20 + 1;
-		lastA.arr.push({
-			x: xPos
-			, y: Math.random() * -1000
-			, width: wid * 2
-			, height: wid * 2
-			, size: wid
-			, speed: Math.random() * 2 + 1
-			, color: colorBack
-			, toggle: true
-			, growth: 0
-		})
-		}
+		
 		for(var c=0; c<brickColumnCount0; c++)
 		{
 			bricks0[c] = [];
@@ -412,7 +388,7 @@
 					level = 4;
 					localStorage.setItem('level', JSON.stringify(level));
 					localStorage.setItem('score', JSON.stringify(totalS));
-					return lastW();
+					return win();
 				  }
 
 				}
@@ -649,45 +625,39 @@
 		}
 		function stars()
 		{
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.restore();
 			ctx.beginPath();
-			ctx.fillStyle = "#e6f5ff";
-			ctx.rect(0, 310, 615, 44);
+			ctx.arc(434, 200, 160, 0, Math.PI*2.5);
+			ctx.lineTo(241, 270);
+	        ctx.lineTo(318, 278.3);
+	        ctx.lineTo(262, 331);
+			ctx.lineTo(275, 405);
+	        ctx.lineTo(208, 370);
+			ctx.lineTo(141.2, 405);
+	        ctx.lineTo(155, 331);
+	        ctx.lineTo(100, 278);
+			ctx.moveTo(108, 0.0);
+	        ctx.lineTo(141, 70);
+	        ctx.lineTo(218, 78.3);
+	        ctx.lineTo(162, 131);
+			ctx.lineTo(175, 205);
+	        ctx.lineTo(108, 170);
+			ctx.lineTo(41.2, 205);
+	        ctx.lineTo(55, 131);
+	        ctx.lineTo(1, 78);
+	        ctx.lineTo(75, 68);
+	        ctx.lineTo(108, 200);
+	        ctx.lineTo(241, 270);
+	        ctx.lineTo(318, 278.3);
+	        ctx.lineTo(262, 331);
+			ctx.lineTo(275, 405);
+	        ctx.lineTo(208, 370);
+			ctx.lineTo(141.2, 405);
+	        ctx.lineTo(155, 331);
+	        ctx.lineTo(100, 278);
+	        ctx.fillStyle = "#ff8533";
 			ctx.fill();
 			ctx.closePath();
-			ctx.beginPath();
-			ctx.fillStyle = "#b3ff66";
-			ctx.rect(0, 250, 615, 64);
-			ctx.fill();
-			ctx.closePath();	
-			if (lastA.arr.length < lastA.total ) {
-				//console.log(enemies);
-				fillRange();
-			}
-			lastA.arr.forEach((enemy, index) => {
-				enemy.y += enemy.speed;
-				enemy.x += Math.random() * 4 - Math.random() * 4;
-				if (enemy.y > canvas.height -150 || enemy.x > canvas.width ) {
-					lastA.arr.splice(index, 1);
-				}
-				
-				ctx.fillStyle = enemy.color;
-				if (enemy.growth > 10) {
-					enemy.toggle = false;
-					enemy.growth = 0;
-				}
-				ctx.beginPath();
-				ctx.arc(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), enemy.size, 0, Math.PI * 2);
-				ctx.arc(enemy.x + (enemy.width / 2)+10, enemy.y + (enemy.height / 2)+8, enemy.size, 0, Math.PI * 2);
-				ctx.arc(enemy.x + (enemy.width / 2)-10, enemy.y + (enemy.height / 2)+8, enemy.size, 0, Math.PI * 2);
-				ctx.arc(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2)+16, enemy.size, 0, Math.PI * 2);
-				ctx.fill();
-				ctx.closePath();
-				ctx.beginPath();
-				ctx.strokeRect(enemy.x + (enemy.width / 2)+50, enemy.y + (enemy.height / 2),enemy.size, enemy.size);
-				ctx.fill();
-				ctx.closePath();
-			})
 		}
 		function win()
 		{
@@ -713,7 +683,7 @@
 			ctx.closePath();
 			ctx.fillStyle = "#4d0000";
 			ctx.beginPath();
-			ctx.rect(350, 310, 100, 35);
+			ctx.rect(340, 290, 70, 65);
             ctx.font = "30px Arial";
 			ctx.fillText("Congratulions you won the level:"+level, 50, 100);		    
 			ctx.stroke();
@@ -758,79 +728,12 @@
 		}
 		function lastW()
 		{
-			if (lastA.arr.length < lastA.total +50 ) {
-				//console.log(enemies);
-				fillRange();
-			}
-			lastA.arr.forEach((enemy, index) => {
-				enemy.y += enemy.speed;
-				enemy.x += Math.random() * 4 - Math.random() * 4;
-				if (enemy.y > canvas.height || enemy.x > canvas.width) {
-					lastA.arr.splice(index, 1);
-				}
-				
-				ctx.fillStyle = enemy.color;
-				if (enemy.growth > 10) {
-					enemy.toggle = false;
-					enemy.growth = 0;
-				}
-				ctx.beginPath();
-				ctx.arc(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), enemy.size, 0, Math.PI * 2);
-				ctx.arc(enemy.x + (enemy.width / 2)+10, enemy.y + (enemy.height / 2)+8, enemy.size, 0, Math.PI * 2);
-				ctx.arc(enemy.x + (enemy.width / 2)-10, enemy.y + (enemy.height / 2)+8, enemy.size, 0, Math.PI * 2);
-				ctx.arc(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2)+16, enemy.size, 0, Math.PI * 2);
-				ctx.fill();
-				ctx.closePath();
-				ctx.beginPath();
-				ctx.strokeRect(enemy.x + (enemy.width / 2)+50, enemy.y + (enemy.height / 2),enemy.size, enemy.size);
-				ctx.fill();
-				ctx.closePath();
-			})	
-			ctx.beginPath();
-			ctx.rect(340, 310, 100, 35);
-            ctx.font = "30px Arial";
-			ctx.fillText("Congratulions you won the Game!!!", 50, 100);		    
-			ctx.stroke();
-			ctx.closePath();
-            draw1totalS();							
-            requestAnimationFrame(win);
-			window.location.reload()
-			if(retrive == 3)
-			{
-				btn.innerHTML = '<input type="button" id="sec" onclick="draw3()" value="Fourth level"/>';
-				el.appendChild(btn);
-				su.setAttribute('value', totalS);
-				suL.setAttribute('value', retrive);
-                requestAnimationFrame(draw3);
-			}
-			else if(retrive == 2)
-			{
-				btn.innerHTML = '<input type="button" id="sec" onclick="draw2()" value="Third level"/>';
-				el.appendChild(btn);
-				su.setAttribute('value', retriveS);
-				suL.setAttribute('value', retrive);
-                requestAnimationFrame(draw2);
-			}
-			else if(retrive == 1)
-			{
-				btn.innerHTML = '<input type="button" id="sec" onclick="draw1()" value="Second level"/>';
-				el.appendChild(btn);
-				su.setAttribute('value', retriveS);
-				suL.setAttribute('value', retrive);
-                requestAnimationFrame(draw1);
-			}
-			else
-			{	
-				
-				btn.innerHTML = '<input type="button" id="sec" onclick="draw0()" value="First level"/>';
-				el.appendChild(btn);
-				su.setAttribute('value', retriveS);
-				suL.setAttribute('value', retrive);
-                requestAnimationFrame(draw1);
-
-			}
+			ctx.strokeStyle="#009900";
+			ctx.fillStyle="#ff0000";
+			ctx.strokeRect(70,70,90,90);
+			ctx.fillRect(80,80,70,70);
+			ctx.strokeRect(95,95,30,30);
 		}
-		
 		function draw1Paddle()
 		{
 
@@ -947,8 +850,10 @@
 		{
 			if(paused)
 			{
+				music.pause();
 				return;
 			}
+			music.play();
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			spaceship();
 			  draw1Bricks0();
@@ -1014,8 +919,10 @@
 		{
 			if(paused)
 			{
+				music.pause();
 				return;
 			}
+			music.play();
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			trees();
 		    draw1Bricks();
@@ -1079,8 +986,10 @@
 		{
 			if(paused)
 			{	
+				music.pause();
 				return;
 			}
+			music.play();
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			skyline()
 		    draw1Bricks2();
@@ -1145,8 +1054,10 @@
 		{
 			if(paused)
 			{
+				music.pause();
 				return;				
 			}
+			music.play();
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			stars();
 		    draw1Bricks2();
@@ -1215,7 +1126,7 @@
     			if (!paused) requestAnimationFrame(e);
 			}
 		}
-		
+
 		</script>
 
 {% endblock %}
