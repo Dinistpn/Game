@@ -1,5 +1,4 @@
 certifi==2021.10.8
-click==8.0.3
 cs50==8.0.0
 dataclasses==0.8
 Flask==2.0.2
