@@ -1,6 +1,6 @@
 import secrets
 import requests
-
+from flask_frozen import Freezer
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -10,7 +10,7 @@ from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
-
+freezer = Freezer(app)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -88,4 +88,4 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    freezer.freeze()
